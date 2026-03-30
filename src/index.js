@@ -5,6 +5,19 @@ import messagesRouter from "./routes/messages.js";
 const app = express();
 app.use(express.json());
 
+app.get("/", (_req, res) => {
+  res.json({
+    ok: true,
+    service: "message-api",
+    endpoints: {
+      "GET /health": "kiểm tra server",
+      "GET /messages": "tin cuối mỗi hội thoại (header: x-user-id)",
+      "GET /messages/:userId": "toàn bộ tin với user đó",
+      "POST /messages": "gửi tin — body: { to, contentMessage: { type, content } }",
+    },
+  });
+});
+
 app.get("/health", (_req, res) => res.json({ ok: true }));
 
 app.use("/messages", messagesRouter);
